@@ -10,4 +10,7 @@ class User extends Model
         'email',
         'password' 
     ];
+
+    
+
 }

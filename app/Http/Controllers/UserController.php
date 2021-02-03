@@ -12,10 +12,30 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $user = User::all();   
-        return response()->json($user);
+        /***
+         * {
+         *     "email":"teste@gmail.com",
+         *      "password":"123"
+     * }
+      */
+
+        $user = User::where('email', $request->email)->first();
+        $userPassword = $user->password;
+        
+        $userPasswordLogin = $request->password;
+
+        if($userPassword != $userPasswordLogin){
+            return response()->json([
+                'massage' => 'Incorrect passoword '
+            ]);
+        }else{
+            return response()->json([
+                'massage' => 'Login success',
+                'user' => $user
+            ]);
+        }
     }
 
     /**
